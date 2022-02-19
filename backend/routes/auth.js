@@ -6,7 +6,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const JWT_TOKEN = "raxkareactmind";
-router.post('/', [
+
+// Created new User using :: POST "/api/auth/createnewuser"
+
+router.post('/createnewuser', [
     body('name', 'Please enter a valid name').isLength({ min: 3 }),
     body('email', 'Please enter a valid email').isEmail(),
     body('password', 'Password must have minimum 5 characters').isLength({ min: 5 }),
@@ -42,5 +45,41 @@ router.post('/', [
         res.status(500).send("Some errors occured (" + error.message + ")");
     }
 
-})
+});
+
+
+// Login User using :: POST "/api/auth/login"
+
+router.post('/login', [
+    body('email', 'Please enter a valid email').isEmail(),
+    body('password', 'Password must have minimum 5 characters').exists(),
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+        const {email,password} = req.body;
+        let user = await User.findOne({email});
+        if (!user) {
+            return res.status(400).json({ errors: 'Please try to login with correct email id' });
+        }
+
+        const passwordCompare = await bcrypt.compare(password, user.password);
+        if (!passwordCompare) {
+            return res.status(400).json({ errors: 'Please try to login with correct password' });
+        }
+
+        const data = {
+            user : {
+                id:user.id
+            }
+        };
+        const authToken = jwt.sign(data, JWT_TOKEN);
+        res.json({authToken})
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send("Some errors occured (" + error.message + ")");
+    }
+});
 module.exports = router;
