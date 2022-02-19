@@ -4,10 +4,10 @@ const User = require('../models/User')
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
+const fetchuser = require('../middleware/fetchuser');
 const JWT_TOKEN = "raxkareactmind";
 
-// Created new User using :: POST "/api/auth/createnewuser"
+// Route 1 :: Created new User using :: POST "/api/auth/createnewuser"
 
 router.post('/createnewuser', [
     body('name', 'Please enter a valid name').isLength({ min: 3 }),
@@ -48,7 +48,7 @@ router.post('/createnewuser', [
 });
 
 
-// Login User using :: POST "/api/auth/login"
+// Route 2 :: Login User using :: POST "/api/auth/login"
 
 router.post('/login', [
     body('email', 'Please enter a valid email').isEmail(),
@@ -82,4 +82,18 @@ router.post('/login', [
         res.status(500).send("Some errors occured (" + error.message + ")");
     }
 });
+
+// Route 3 :: Get user info by token :: POST "/api/auth/login"
+
+router.post('/getuserinfo', fetchuser ,async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const getUsr = await User.findById(userId).select('-password');
+        res.send(getUsr);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send("Some errors occured (" + error.message + ")");
+    }
+});
+
 module.exports = router;
