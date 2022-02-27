@@ -3,7 +3,7 @@ import noteContext from '../context/notes/noteContext'
 import AddNote from './AddNote';
 import Noteitems from './Noteitems';
 
-const Notes = () => {
+const Notes = (props) => {
   const context = useContext(noteContext);
   const { notes, getAllNotes, editNote } = context;
   const [note, setNote] = useState({id:"",ename:"",edescription:"",etag:""})
@@ -55,12 +55,12 @@ const Notes = () => {
               <form className='my-4'>
                 <div className="form-group my-2">
                   <label htmlFor="Name">Name</label>
-                  <input type="text" className="form-control" name="ename" id="ename" aria-describedby="name" placeholder="Enter name" value={note.ename} onChange={onChange} />
+                  <input type="text" className="form-control" name="ename" id="ename" aria-describedby="name" placeholder="Enter name" value={note.ename} onChange={onChange} required minLength={4}/>
                 </div>
 
                 <div className="form-group my-2">
                   <label htmlFor="description">Description</label>
-                  <input type="text" className="form-control" value={note.edescription} name="edescription" id="edescription" placeholder="Description" onChange={onChange} />
+                  <input type="text" className="form-control" value={note.edescription} name="edescription" id="edescription" placeholder="Description" onChange={onChange}  required minLength={4}/>
                 </div>
 
                 <div className="form-group my-2">
@@ -72,13 +72,16 @@ const Notes = () => {
             </div>
             <div className="modal-footer">
               <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" className="btn btn-primary" onClick={handleClick}>Update Note</button>
+              <button disabled={note.ename.length<4 || note.edescription.length<4} type="submit" className="btn btn-primary" onClick={handleClick}>Update Note</button>
             </div>
           </div>
         </div>
       </div>
       <h2 className='my-4'>Your Notes</h2>
       <div className="row my-3">
+        <div className="container">
+        {notes.length === 0 && 'No notes are available'}
+        </div>
         {notes.map((note) => {
           return <Noteitems key={note._id} note={note} updateNote={updateNote} />
         })}

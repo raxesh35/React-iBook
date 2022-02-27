@@ -5,11 +5,11 @@ const AddNote = () => {
   const context = useContext(noteContext);
   const { addNote } = context;
 
-  const [note, setNote] = useState({name:"",description:"",tag:"General"})
+  const [note, setNote] = useState({name:"",description:"",tag:""})
   const handleClick = (e) => {
     e.preventDefault();
-    console.log(note)
     addNote(note.name, note.description, note.tag);
+    setNote({name:"",description:"",tag:""});
   }  
 
   const onChange = (e) => {
@@ -21,19 +21,19 @@ const AddNote = () => {
       <form className='my-4'>
         <div className="form-group my-2">
           <label htmlFor="Name">Name</label>
-          <input type="text" className="form-control" name="name" id="name" aria-describedby="name" placeholder="Enter name" onChange={onChange}/>
+          <input type="text" className="form-control" name="name" value={note.name} id="name" aria-describedby="name" placeholder="Enter name" onChange={onChange}  required minLength={4}/>
         </div>
 
         <div className="form-group my-2">
           <label htmlFor="description">Description</label>
-          <input type="description" className="form-control" name="description" id="description" placeholder="Description" onChange={onChange}/>
+          <input type="text" className="form-control" name="description" value={note.description} id="description" placeholder="Description" onChange={onChange}  required minLength={4}/>
         </div>
 
         <div className="form-group my-2">
           <label htmlFor="tag">Tag</label>
-          <input type="tag" className="form-control" name="tag" id="tag" placeholder="Tag" onChange={onChange}/>
+          <input type="text" className="form-control" name="tag" value={note.tag} id="tag" placeholder="Tag" onChange={onChange}/>
         </div>
-        <button type="submit" className="btn btn-primary" onClick={handleClick}>Add Note</button>
+        <button disabled={note.name.length<4 || note.description.length<4} type="submit" className="btn btn-primary" onClick={handleClick}>Add Note</button>
       </form>
     </div>
   )

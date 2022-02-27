@@ -1,11 +1,19 @@
 import React from 'react'
 
-const Alert = (props) => {
+export default function Alert(props) {
+  
+  const capiTalize = (word) => {
+    const lower = word.toLowerCase();
+    return lower.charAt(0).toUpperCase() + lower.slice(1);
+  } 
   return (
-    <div className='alert alert-primary mt-4' role='alert'>
-        {props.message}
-    </div>
+    <>
+      {props.alert && <div>
+        <div style={{marginTop:"70px"}} className={`alert alert-${props.alert.type} alert-dismissible fade show`} role="alert">
+          <strong>{capiTalize(props.alert.type)}</strong> !! {props.alert.msg}
+          <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>}
+    </>
   )
 }
-
-export default Alert

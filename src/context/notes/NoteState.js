@@ -15,7 +15,7 @@ import NoteContext from './noteContext';
             }
         });
         const json = await response.json();
-        console.log(json);
+        //console.log(json);
         setNotes(json);
     }
 
@@ -28,18 +28,7 @@ import NoteContext from './noteContext';
             },
             body: JSON.stringify({name, description, tag}) 
         });
-        const json = await response.json();
-        console.log(json);
-
-        const note = {
-            "_id": "661126bf03bea0457bbe4d402",
-            "user": "6211261116097cac9f052864",
-            "name": name,
-            "description": description,
-            "tag": tag,
-            "date": "2022-05-19T17:19:59.571Z",
-            "__v": 0
-        };
+        const note = await response.json();
         setNotes(notes.concat(note))
     }
 
