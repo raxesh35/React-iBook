@@ -1,12 +1,18 @@
 import React from 'react'
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const Navbar = () => {
-    let location = useLocation();
+const Navbar = (props) => {
+  let location = useLocation();
+  let navigate = useNavigate();
   React.useEffect(() => {
-    //ga.send(["pageview", location.pathname]);
-    console.log(location.pathname)
+
   }, [location]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    props.showAlert('success', 'Logout successfully.. buy buy... ')
+    navigate("/login");
+  }
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
@@ -23,10 +29,10 @@ const Navbar = () => {
                 <Link className={`nav-link ${location.pathname === '/about' ? 'active' : ""}`} to="/about">About</Link>
                 </li>
             </ul>
-            <form className="d-flex">
+            {!localStorage.getItem('token')?<form className="d-flex">
                 <Link className='btn btn-primary mx-2' to="/login" role="button">Login</Link> 
                 <Link className='btn btn-primary mx-2' to="/signup" role="button">Signup</Link> 
-            </form>
+            </form>:<button onClick={handleLogout} className='btn btn-primary mx-2'>Logout</button>}
             </div>
         </div>
         </nav>

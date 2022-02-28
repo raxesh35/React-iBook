@@ -25,6 +25,8 @@ const Login = (props) => {
             localStorage.setItem('token', json.authToken)
             props.showAlert('success', 'Successfully logged in !!')
             navigate("/");
+        } else {
+            props.showAlert('danger', 'Invalid credentials')
         }
     }
     return (
@@ -40,7 +42,7 @@ const Login = (props) => {
                             <form onSubmit={handleSubmit}>
 
                                 <div className="d-flex flex-row align-items-center justify-content-center justify-content-lg-start my-4">
-                                    <p className="lead fw-normal mb-0 me-3">Sign in with</p>
+                                    <p className="text-center h1 fw-bold mb-2 mx-1 mx-md-2 mt-2">Login</p>
                                 </div>
 
                                 <div className="form-outline mb-2">

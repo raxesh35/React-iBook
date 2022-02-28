@@ -11,7 +11,7 @@ import NoteContext from './noteContext';
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
-              'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIxMGZiOTExYTRmOGJjMzVmMTBhNjE2In0sImlhdCI6MTY0NTMyOTIzNH0.c1v9seTwqf8J7xLiwpaPnpbwLex7kkrmc6eFk9FNeNs'
+              'auth-token' : localStorage.getItem('token')
             }
         });
         const json = await response.json();
@@ -24,7 +24,7 @@ import NoteContext from './noteContext';
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIxMGZiOTExYTRmOGJjMzVmMTBhNjE2In0sImlhdCI6MTY0NTMyOTIzNH0.c1v9seTwqf8J7xLiwpaPnpbwLex7kkrmc6eFk9FNeNs'
+              'auth-token' : localStorage.getItem('token')
             },
             body: JSON.stringify({name, description, tag}) 
         });
@@ -37,7 +37,7 @@ import NoteContext from './noteContext';
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
-              'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIxMGZiOTExYTRmOGJjMzVmMTBhNjE2In0sImlhdCI6MTY0NTMyOTIzNH0.c1v9seTwqf8J7xLiwpaPnpbwLex7kkrmc6eFk9FNeNs'
+              'auth-token' : localStorage.getItem('token')
             },
             body: JSON.stringify({name, description, tag}) 
         });
@@ -60,7 +60,7 @@ import NoteContext from './noteContext';
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
-              'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIxMGZiOTExYTRmOGJjMzVmMTBhNjE2In0sImlhdCI6MTY0NTMyOTIzNH0.c1v9seTwqf8J7xLiwpaPnpbwLex7kkrmc6eFk9FNeNs'
+              'auth-token' : localStorage.getItem('token')
             }
         });
         const json = response.json();
